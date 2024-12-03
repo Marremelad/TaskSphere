@@ -51,7 +51,7 @@ public class UserInput
         {
             taskDescription = Console.ReadLine();
 
-            if (taskDescription?.Length <= 35) break;
+            if (taskDescription?.Length <= 255) break;
 
             Console.WriteLine("Invalid input.");
         }
