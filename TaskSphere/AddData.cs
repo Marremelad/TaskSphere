@@ -12,7 +12,7 @@ public static class AddData
         {
             var newCategory = new Category()
             {
-                CategoryName = "NewCategory",
+                CategoryName = "New Category",
                 CategoryDescription = "This is a new category"
             };
 
@@ -29,8 +29,7 @@ public static class AddData
         {
             var newTask = new Task()
             {
-                TaskId = 3,
-                TaskName = "",
+                TaskName = "New Task",
                 TaskDescription = "This is a new task"
             };
 
