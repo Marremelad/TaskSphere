@@ -30,7 +30,8 @@ public static class AddData
             var newTask = new Task()
             {
                 TaskName = "New Task",
-                TaskDescription = "This is a new task"
+                TaskDescription = "This is a new task",
+                CategoryId = 3
             };
 
             context.Tasks.Add(newTask);

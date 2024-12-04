@@ -11,9 +11,13 @@ public class ChangeData
             var taskToUpdate = context.Tasks
                 .FirstOrDefault(t => t.TaskId == 1);
 
+            
             if (taskToUpdate != null)
             {
-                taskToUpdate.TaskName = "New task name";
+                taskToUpdate.TaskName = "Do the dishes";
+                context.SaveChanges();
+
+                Console.WriteLine("Task name updated successfully.");
             }
             else
             {
