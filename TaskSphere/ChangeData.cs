@@ -14,7 +14,7 @@ public class ChangeData
             
             if (taskToUpdate != null)
             {
-                taskToUpdate.TaskName = "Do the dishes";
+                taskToUpdate.TaskName = "New task";
                 context.SaveChanges();
 
                 Console.WriteLine("Task name updated successfully.");
