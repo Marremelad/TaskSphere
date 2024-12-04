@@ -24,21 +24,25 @@ class Program
                     CreateTask(connectionString);
                     break;
                 case "3":
-                    // Låt användaren blocka av en uppgift som genomförd genom att uppge ID för uppgiften
-                    ListTasks(connectionString);
+                    // Låt användaren bocka av en uppgift som genomförd genom att uppge ID för uppgiften
                     CompleteTask(connectionString);
                     break;
                 case "4":
+                    // Dumt och roligt meddelande som inte spelar roll
                     Console.WriteLine("Accidentally inserted a virus in your SQL server. Oops!");
                     break;
                 case "0":
+                    // Stänger av programmet
                     return;
                 default:
+                    // När man gör ett ogiltigt val i menyn
                     Console.WriteLine("Invalid choice. Please try again.");
                     break;
             }
         }
     }
+
+    // Kollar upp motsvarande CategoryId baserat på CategoryName
     public static int? CheckCategoryId(string connectionString, string categoryName)
     {
         using (var connection = new SqlConnection(connectionString))
@@ -67,6 +71,8 @@ class Program
         }
         return null;
     }
+
+    // Skapar en uppgift
     public static void CreateTask(string connectionString)
     {
         Console.WriteLine("Which task do you want to add?");
@@ -78,8 +84,7 @@ class Program
         string taskDescription = Console.ReadLine();
 
         Console.Write("Deadline (in how many days from now): ");
-        
-        // Create a DateTime object representing 7 days from now
+        // Skapar ett DateTime-objekt som är baserat på dagens datum plus antalet dagar som användaren skriver in
         DateTime futureDate = DateTime.Now.AddDays(int.Parse(Console.ReadLine()));
         string taskDeadline = futureDate.ToString("yyyy-MM-dd");
 
@@ -88,13 +93,16 @@ class Program
         string categoryName = Console.ReadLine();
         int? categoryId = CheckCategoryId(connectionString, categoryName);
 
-        using (SqlConnection connection = new SqlConnection(connectionString))
+        using (var connection = new SqlConnection(connectionString))
         {
+            // Öppna anslutningen
             connection.Open();
 
+            // Sätter in en rad i Tasks
             string sql = "INSERT INTO Tasks (TaskName, TaskStatus, TaskDeadline, TaskDescription, CategoryId) VALUES (@TaskName, 0, @TaskDeadline, @TaskDescription, @CategoryId)";
 
-            using (SqlCommand command = new SqlCommand(sql, connection))
+            // Utför SQL-frågan
+            using (var command = new SqlCommand(sql, connection))
             {
                 command.Parameters.AddWithValue("@TaskName", taskName);
                 command.Parameters.AddWithValue("@TaskDescription", taskDescription);
@@ -106,6 +114,8 @@ class Program
             }
         }
     }
+
+    // Visar upp alla uppgifter
     public static void ListTasks(string connectionString)
     {
         using (var connection = new SqlConnection(connectionString))
@@ -140,6 +150,8 @@ class Program
             }
         }
     }
+
+    // Bockar av en uppgift
     public static void CompleteTask(string connectionString)
     {
         Console.WriteLine("Which task have you completed?");
@@ -147,13 +159,14 @@ class Program
         Console.Write("Task ID: ");
         int taskId = int.Parse(Console.ReadLine());
 
-        using (SqlConnection connection = new SqlConnection(connectionString))
+        using (var connection = new SqlConnection(connectionString))
         {
+            // Öppna anslutningen
             connection.Open();
 
             string sql = "UPDATE Tasks SET TaskStatus = 1 WHERE TaskId = @TaskId";
 
-            using (SqlCommand command = new SqlCommand(sql, connection))
+            using (var command = new SqlCommand(sql, connection))
             {
                 command.Parameters.AddWithValue("@TaskId", taskId);
 
